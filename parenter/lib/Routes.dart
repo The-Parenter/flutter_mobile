@@ -14,8 +14,10 @@ import 'package:parenter/Screens/Profile/AddBankAccountScreen.dart';
 import 'package:parenter/Screens/Profile/AddCreditCard.dart';
 import 'package:parenter/Screens/Profile/BankInfoScreen.dart';
 import 'package:parenter/Screens/Profile/ChangePasswordScreen.dart';
+import 'package:parenter/Screens/Profile/EditServiceProviderScreen.dart';
 import 'package:parenter/Screens/Profile/Favorites.dart';
 import 'package:parenter/Screens/Profile/PaymentsScreen.dart';
+import 'package:parenter/Screens/Profile/SettingsScreen.dart';
 import 'package:parenter/Screens/Search/ComfirmBookingScreen.dart';
 import 'package:parenter/Screens/Search/MapVIewScreen.dart';
 import 'package:parenter/Screens/Search/SearchDetail.dart';
@@ -55,7 +57,7 @@ class RouteGenerator {
       case '/ForgotPasswordScreen':
         return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
       case '/ParentSignUpScreen':
-        return MaterialPageRoute(builder: (_) => ParentSignUpScreen());
+        return MaterialPageRoute(builder: (_) => ParentSignUpScreen(args));
       case '/FamilyInformationScreen':
         return MaterialPageRoute(builder: (_) => FamilyInformationScreen(settings.arguments));
       case '/ServiceProviderSignupScreen':
@@ -91,6 +93,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ReviewScreen(args));
       case '/EditProfileScreen':
         return MaterialPageRoute(builder: (_) => EditProfileScreen());
+      case '/EditServiceProviderScreen':
+        return MaterialPageRoute(builder: (_) => EditServiceProviderScreen());
       case '/BookingDetail':
         return MaterialPageRoute(builder: (_) => BookingDetail());
       case '/MapScreen':
@@ -103,6 +107,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AddBankAccountScreen());
       case '/ChatDetailScreen':
         return MaterialPageRoute(builder: (_) => ChatDetailScreen(settings.arguments));
+      case '/SettingsScreen':
+        return MaterialPageRoute(builder: (_) => SettingsScreen());
       default:
         return _errorRoute();
     }

@@ -8,6 +8,9 @@
        android:usesCleartextTraffic="true"
        android:icon="@mipmap/ic_launcher">
 
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_channel_id"
+           android:value="parenter_ch01"/>
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyBswzNSlJ1rqDncjYmvkOqQTho6NzivfTQ"/>
 
@@ -35,7 +38,11 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
-            <intent-filter>
+           <intent-filter>
+               <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+               <category android:name="android.intent.category.DEFAULT" />
+           </intent-filter>
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>

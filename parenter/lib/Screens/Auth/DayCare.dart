@@ -356,7 +356,6 @@ class _DayCareState extends State<DayCare> {
                       children: [
                         ageCheckBox(context, 0),
                         ageCheckBox(context, 1),
-
                       ],
                     ),
                     Row(

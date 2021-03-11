@@ -11,6 +11,7 @@ import 'package:parenter/Screens/Profile/ProfileScreen.dart';
 import 'package:parenter/common/Constants.dart';
 import 'package:parenter/common/Singelton.dart';
 import 'package:parenter/firebase/FirestoreDB.dart';
+import 'package:parenter/firebase/PushNotificationManager.dart';
 import 'package:parenter/firebase/TrackRouteModel.dart';
 
 class BottomTabsScreen extends StatefulWidget {
@@ -30,6 +31,8 @@ class _BottomTabsScreenState extends State<BottomTabsScreen> {
   var curentIndex = 0;
   @override
   void initState() {
+    var pnManager = PushNotificationsManager();
+    pnManager.init();
     super.initState();
     if (Global.userType == UserType.Parent) {
       widgetsList.add(HomeScreen());

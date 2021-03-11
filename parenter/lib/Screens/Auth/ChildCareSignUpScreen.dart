@@ -23,7 +23,8 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 class ChildCareSignUpScreen extends StatefulWidget {
   final Function onSubmit;
-  ChildCareSignUpScreen(this.onSubmit);
+  final bool isUpdate;
+  ChildCareSignUpScreen(this.onSubmit,{this.isUpdate = false});
 
   @override
   _ChildCareSignUpScreenState createState() => _ChildCareSignUpScreenState();
@@ -62,7 +63,44 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
   final picker = ImagePicker();
 
   var registerSP = ServiceProviderRegisterModel();
+  var spData = ServiceProviderRegisterModel();
 
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isUpdate){
+      this.spData = Global.currentServiceProvider;
+      setSPData();
+      setState(() {
+      });
+    }
+
+    // getUserDetails();
+  }
+  void setSPData(){
+    fNameController.text = spData.firstName;
+    lNameController.text = spData.lastName;
+    emailController.text = spData.emailAddress;
+    phoneController.text = spData.phone;
+    addressController.text = spData.postalAddress;
+    educationController.text = spData.educationLevel;
+    apartmentController.text = spData.apartmentNo;
+    experienceController.text = spData.experienceDetail;
+    languageController.text = spData.languages;
+
+    for (var each in spData.extraServices){
+      if (each.toLowerCase().contains("special")){
+        this.isSpecial = true;
+      }else if (each.toLowerCase().contains("cook")){
+        this.isCooking = true;
+      }else if (each.toLowerCase().contains("clean")){
+        this.isClean = true;
+      }
+    }
+  }
 
   Future getImage(int index) async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -81,7 +119,6 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
       }
     });
   }
-
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
@@ -98,43 +135,37 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-//                Center(
-//                  child: Padding(
-//                    padding: const EdgeInsets.only(top:0.0),
-//                    child: SizedBox(
-//                      height: 90,
-//                      width: 90,
-//                      child: Image(
-//                        image: AssetImage(
-//                          'resources/images/logo.png',
-//                        ),
-//                        fit: BoxFit.fill,
-//                      ),
-//                    ),
-//
-//                  ),
-//                ),
-              SizedBox(
-                height: 24,
+                Column(
+              children:!this.widget.isUpdate ? [
+                 SizedBox(
+               height: 24,
+                 ),
+            Center(
+              child: Text(
+                AppStrings.SIGNUP,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline2
+                    .copyWith(color: Colors.black),
               ),
-              Center(
-                child: Text(
-                  AppStrings.SIGNUP,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2
-                      .copyWith(color: Colors.black),
-                ),
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            Center(
+              child: Text(
+                AppStrings.REGISTER_YOURSELF,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyText2,
               ),
-              SizedBox(
-                height: 24,
+            ),
+
+            ]:[],
               ),
-              Center(
-                child: Text(
-                  AppStrings.REGISTER_YOURSELF,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              ),
+
               SizedBox(
                 height: 24,
               ),
@@ -221,31 +252,35 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
                     keyBoardType: TextInputType.streetAddress
                 ),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              appTextField(
-                  'Password *',
-                  Icon(
-                    Icons.lock_outline,
-                    size: 25,
-                    color: AppColors.appPinkColor,
+              Column(
+                children: !this.widget.isUpdate?[
+                  SizedBox(
+                    height: 16,
                   ),
-                  controller: this.passwordController,
+                  appTextField(
+                      'Password *',
+                      Icon(
+                        Icons.lock_outline,
+                        size: 25,
+                        color: AppColors.appPinkColor,
+                      ),
+                      controller: this.passwordController,
 
-                  isPassword: true),
-              SizedBox(
-                height: 16,
-              ),
-              appTextField(
-                  'Confirm Password *',
-                  Icon(
-                    Icons.lock_outline,
-                    size: 25,
-                    color: AppColors.appPinkColor,
+                      isPassword: true),
+                  SizedBox(
+                    height: 16,
                   ),
-                  controller: this.confirmController,
-                  isPassword: true),
+                  appTextField(
+                      'Confirm Password *',
+                      Icon(
+                        Icons.lock_outline,
+                        size: 25,
+                        color: AppColors.appPinkColor,
+                      ),
+                      controller: this.confirmController,
+                      isPassword: true),
+                ]:[],
+              ),
               SizedBox(
                 height: 16,
               ),
@@ -402,35 +437,40 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
               AvailabilityWidget((workingDays){
                 registerSP.workingDays = workingDays;
                 print(workingDays[0]);
-              }),
-              SizedBox(
-                height: 24,
-              ),
-              new Text(
-                '      First Reference',
-                textAlign: TextAlign.left,
-                style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15.0,
-                ),
-              ),
-              ReferenceWidget(this.registerSP.refrences[0],(reference){
-                this.registerSP.refrences[0] = reference;
-              }),
-              SizedBox(
-                height: 24,
-              ),
-              new Text(
-                '      Second Reference',
-                textAlign: TextAlign.left,
-                style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15.0,
-                ),
-              ),
-              ReferenceWidget(this.registerSP.refrences[1],(reference){
-                this.registerSP.refrences[1] = reference;
-              }),
+              },data: spData.workingDays,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: !this.widget.isUpdate?[
+                  SizedBox(
+                    height: 24,
+                  ),
+                  new Text(
+                    '      First Reference',
+                    textAlign: TextAlign.left,
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  ReferenceWidget(this.registerSP.refrences[0],(reference){
+                    this.registerSP.refrences[0] = reference;
+                  }),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  new Text(
+                    '      Second Reference',
+                    textAlign: TextAlign.left,
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  ReferenceWidget(this.registerSP.refrences[1],(reference){
+                    this.registerSP.refrences[1] = reference;
+                  }),
+
+
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -634,6 +674,9 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
                     ],
                   ),
                 ),
+
+              ),
+                ]:[],
               ),
               SizedBox(
                 height: 24,
@@ -757,9 +800,7 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
         showAlertDialog(context,  AppStrings.VALIDATION_FAILED, AppStrings.VALID_EMAIL_MESSAGE_REFERENCE, false, (){});
         return;
       }
-
     }
-
     for (var each in registerSP.workingDays){
       if (each.dayName.isNotEmpty){
         if (each.from.isEmpty || each.to.isEmpty){
@@ -768,7 +809,6 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
         }
       }
     }
-
     registerSP.firstName = fNameController.text;
     registerSP.lastName = lNameController.text;
     registerSP.phone = phoneController.text;
@@ -779,8 +819,6 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
     registerSP.experienceDetail = experienceController.text;
     registerSP.additionalDetails = additionalController.text;
     registerSP.apartmentNo = apartmentController.text;
-
-
     if (this.isSpecial){
       registerSP.extraServices.add("Special Needs");
     }
@@ -790,7 +828,6 @@ class _ChildCareSignUpScreenState extends State<ChildCareSignUpScreen> {
     if (this.isClean){
       registerSP.extraServices.add("Cleaning");
     }
-
     registerSP.isMentionedAge = this.ageRadioValue == 0 ? true : false;
     registerSP.haveValidLicense = this.licensRadioValue == 0 ? true : false;
       _sendSignUpRequest(context);

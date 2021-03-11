@@ -17,6 +17,7 @@ class ApplicationURLs {
 
 
  static const LOGIN_URL = BASE_URL + 'Login/UserLogin';
+ static const SOCIAL_LOGIN_URL = BASE_URL + 'User/GetUserByEmail?email=';
  static const FORGOT_PASSWORD_URL = BASE_URL + USER + 'RequestForgotPassword';
  static const CREATE_PARENT_URL = BASE_URL + PARENT + 'CreateParent';
  static const CREATE_SP_URL = BASE_URL + SERVICE_PROVIDER + 'CreateServiceProvider';
@@ -48,10 +49,12 @@ class ApplicationURLs {
  static const ADD_RATING_URL = BASE_URL + RATING + 'AddRating';
  static const ADD_FAVOURITE_URL = BASE_URL + SERVICE_PROVIDER + 'AddFavourite?';
  static const REMOVE_FAVOURITE_URL = BASE_URL + SERVICE_PROVIDER + 'RemoveFavourite?';
+ static const NOTIFICATION_SETTING_URL = BASE_URL + NOTIFICATIONS + "NotificationsEnableDisable?userId=";
  static const GET_FAVOURITE_URL = BASE_URL + SERVICE_PROVIDER + 'GetFavouriteServiceProvidersByParentId?parentId=';
-
  static const GET_PAYMENTS_URL = BASE_URL + PAYMENT + 'GetAllPaymentsByUserId?userId=';
-
  static const UPDATE_PARENT_URL = BASE_URL + PARENT + 'UpdateParent';
+ static const UPDATE_SP_URL = BASE_URL + SERVICE_PROVIDER + 'UpdateServiceProvider';
+
+
 
 }

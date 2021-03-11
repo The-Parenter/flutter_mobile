@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:parenter/common/Constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 Future<bool> check() async {
@@ -149,6 +150,7 @@ String showAlertDialog(BuildContext context, String title, String message,
     content: Text(message),
     actions: <Widget>[
       FlatButton(
+        color: AppColors.appPinkColor,
         child: Text('Ok'),
         onPressed: () {
           Navigator.of(context).pop();

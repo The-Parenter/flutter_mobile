@@ -8,7 +8,8 @@ import 'package:intl/intl.dart';
 class AvailabilityWidget extends StatefulWidget {
 
   final Function onChanged;
-  AvailabilityWidget(this.onChanged);
+  final List<DayModel> data;
+  AvailabilityWidget(this.onChanged,{this.data});
   @override
   _AvailabilityWidgetState createState() => _AvailabilityWidgetState();
 }
@@ -16,7 +17,53 @@ class AvailabilityWidget extends StatefulWidget {
 class _AvailabilityWidgetState extends State<AvailabilityWidget> {
    List<bool> daysValues = [false,false,false,false,false,false,false];
    List<DayModel> workingDays = [DayModel(),DayModel(),DayModel(),DayModel(),DayModel(),DayModel(),DayModel()];
+   @override
+   void initState() {
+     // TODO: implement initState
+     super.initState();
+     if (widget.data != null){
 
+       for (var i=0;i<widget.data.length;i++){
+         var each = widget.data[i];
+         if (each.dayName.toLowerCase().contains('sun')){
+           workingDays[0] = each;
+           workingDays[0].isEnabled = true;
+           daysValues[0] = true;
+         }else if (each.dayName.toLowerCase().contains('mon')){
+           workingDays[1] = each;
+           workingDays[1].isEnabled = true;
+           daysValues[1] = true;
+         } else if (each.dayName.toLowerCase().contains('tue')){
+           workingDays[2] = each;
+           workingDays[2].isEnabled = true;
+           daysValues[2] = true;
+         }else if (each.dayName.toLowerCase().contains('wed')){
+           workingDays[3] = each;
+           workingDays[3].isEnabled = true;
+           daysValues[3] = true;
+         }else if (each.dayName.toLowerCase().contains('thu')){
+           workingDays[4] = each;
+           workingDays[4].isEnabled = true;
+           daysValues[4] = true;
+         }else if (each.dayName.toLowerCase().contains('fri')){
+           workingDays[5] = each;
+           workingDays[5].isEnabled = true;
+           daysValues[5] = true;
+         }else if (each.dayName.toLowerCase().contains('sat')){
+           workingDays[6] = each;
+           workingDays[6].isEnabled = true;
+           daysValues[6] = true;
+         }
+
+       }
+
+       setState(() {
+
+       });
+     }
+
+     // getUserDetails();
+   }
 
   Widget availabilityRow(BuildContext context,String dayTitle,int index){
     return Row(
@@ -57,7 +104,7 @@ class _AvailabilityWidgetState extends State<AvailabilityWidget> {
                     final f = new DateFormat('HH:mm');
                     workingDays[index].from = f.format(value);
                     widget.onChanged(workingDays);
-                  }),
+                  },initialValue: workingDays[index].from),
                 )
             ),
             SizedBox(width: 40,),
@@ -77,7 +124,7 @@ class _AvailabilityWidgetState extends State<AvailabilityWidget> {
                     final f = new DateFormat('HH:mm');
                     workingDays[index].to = f.format(value);
                     widget.onChanged(workingDays);
-                  }),
+                  },initialValue: workingDays[index].to,),
                 )
             ),
             SizedBox(width: 15,),
@@ -130,13 +177,14 @@ class _AvailabilityWidgetState extends State<AvailabilityWidget> {
 class BasicTimeField extends StatelessWidget {
   final bool isEnable;
   final Function onValueChanged;
-  BasicTimeField(this.isEnable,this.onValueChanged);
+  final String initialValue;
+  BasicTimeField(this.isEnable,this.onValueChanged,{this.initialValue});
   final format = DateFormat("HH:mm");
   @override
   Widget build(BuildContext context) {
     return
       DateTimeField(
-
+       // initialValue: this.initialValue.isEmpty ?null: DateTime.parse(initialValue),
         onChanged: (value){
           onValueChanged(value);
         },
@@ -145,6 +193,10 @@ class BasicTimeField extends StatelessWidget {
           fontSize: 14,
         ),
         decoration: InputDecoration(
+          hintText: initialValue,
+          hintStyle: TextStyle(
+            color: Colors.black
+          ),
           border: InputBorder.none,
             suffixIcon: null,
         ),

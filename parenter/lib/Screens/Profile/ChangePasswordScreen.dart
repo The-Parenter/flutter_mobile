@@ -256,7 +256,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         Map<String, String> parameters = Map();
         parameters['EmailAddress'] = Global.userType == UserType.Parent ? Global.currentUser.email:Global.currentServiceProvider.emailAddress;
         parameters['NewPassword'] = this.newController.text;
-        HTTPManager().authenticateUser(parameters).then((onValue) {
+        HTTPManager().changeUSerPassword(parameters).then((onValue) {
           progressDialog.hide();
           final response = onValue;
           if (response['responseCode'] == "01") {

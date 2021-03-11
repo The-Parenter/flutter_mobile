@@ -3,6 +3,7 @@ import 'package:parenter/API/HTTPManager.dart';
 import 'package:parenter/Models/User/RatingModel.dart';
 import 'package:parenter/Widgets/ActivityIndicator.dart';
 import 'package:parenter/common/Constants.dart';
+import 'package:parenter/common/Singelton.dart';
 
 class ReviewScreen extends StatefulWidget {
   static final String routeName = '/ReviewScreen';
@@ -72,9 +73,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         children:
                         [
                           Text(
-                          '${this.ratingList.avgRating}',
+                          '${Global.bookingSP.getFullName()} - ${this.ratingList.avgRating}',
                           style:
-                          TextStyle(fontSize: 24, color: AppColors.textColor),
+                          TextStyle(fontSize: 20, color: AppColors.textColor),
                         ),
                           Icon(Icons.star,color: AppColors.appPinkColor,size: 30,)
                       ]
@@ -143,6 +144,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                     width: 12.0,
                                   ),
                                   Expanded(
+                                    flex: 8,
                                     child: Column(
                                       crossAxisAlignment:
                                       CrossAxisAlignment.start,
@@ -167,6 +169,15 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                       ],
                                     ),
                                   ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Row(
+                                      children: [
+                                      Icon(Icons.star,size: 20,color: AppColors.appPinkColor,),
+                                        Text('${this.ratingList.ratings[index].rating}')
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             ),

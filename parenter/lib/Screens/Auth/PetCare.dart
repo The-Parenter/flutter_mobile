@@ -603,7 +603,6 @@ class _PetCareState extends State<PetCare> {
   void _validateAndSendRequest(BuildContext context) async{
     var msg = "";
     if (experienceController.text.isEmpty){ msg = ValidationMessages.experience;}
-    if (educationController.text.isEmpty){ msg = ValidationMessages.education;}
     if (languageController.text.isEmpty){ msg = ValidationMessages.languages;}
     if (addressController.text.isEmpty){ msg = ValidationMessages.address;}
     if (confirmController.text.isEmpty){ msg = ValidationMessages.confirmPassword;}

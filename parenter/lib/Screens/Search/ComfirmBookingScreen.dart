@@ -27,7 +27,8 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   DateTime selectedDate = DateTime.now();
   var timingsFrom = "";
   var timingsTo = "";
-
+  var fromTime = DateTime.now().add(Duration(minutes: 10));
+  var toTime = DateTime.now().add(Duration(minutes: 70));
   var isCooking = false;
   var isCleaning = false;
   var isSpecial = false;
@@ -45,6 +46,13 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   @override
   Widget build(BuildContext context) {
 
+    progressDialog = ProgressDialog(context);
+    progressDialog.style(
+      message: 'Please wait...',
+      progressWidget: CircularProgressIndicator(
+        backgroundColor: AppColors.appPinkColor,
+      ),
+    );
     return Scaffold(
       backgroundColor: AppColors.appBGColor,
       key: _scaffoldKey,
@@ -174,6 +182,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                                               padding: const EdgeInsets.only(left:8.0,bottom: 6.0),
                                               child:  BasicTimeField(true,(value){
                                                 final f = new DateFormat('HH:mm');
+                                                fromTime = value;
                                                 timingsFrom = getTimeOnlyFromDate(value);
                                               }),
                                             )
@@ -211,6 +220,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                                               padding: const EdgeInsets.only(left:8.0,bottom: 6.0),
                                               child:  BasicTimeField(true,(value){
                                                 final f = new DateFormat('HH:mm');
+                                                toTime = value;
                                                 timingsTo = getTimeOnlyFromDate(value);
 
                                               }),
@@ -332,9 +342,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                                           ],
                                         ),
                                         Icon(
-                                          Icons.check_circle,
-                                          color: Colors.green,
-                                          size: e.value.isSelected ? 20:0,
+                                           Icons.check_circle ,
+                                          color: e.value.isSelected ? Colors.green:Colors.grey,
+                                          size: 20,
                                         )
                                       ],
                                 ),
@@ -603,8 +613,41 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       showAlertDialog(context,  AppStrings.VALIDATION_FAILED, this.isForPet ?AppStrings.SELECT_PETS_MESSAGE : AppStrings.SELECT_CHILDS_MESSAGE, false, (){});
       return;
     }
+
+    if (!this.isValidDateTime()){
+      return;
+    }
     _sendSignUpRequest(context);
 
+  }
+
+  bool isValidDateTime(){
+    var result = false;
+    var fTime = DateTime(selectedDate.year,selectedDate.month,selectedDate.day,fromTime.hour,fromTime.minute);
+    var tTime = DateTime(selectedDate.year,selectedDate.month,selectedDate.day,toTime.hour,toTime.minute);
+
+    if (selectedDate.isAfter(DateTime.now())){
+      result = true;
+    }else{
+      if (fTime.isAfter(DateTime.now().add(Duration(minutes: 10)))){
+        result = true;
+      }else{
+        result = false;
+        showAlertDialog(context,  AppStrings.VALIDATION_FAILED, AppStrings.FROM_TIME_ERROR, false, (){});
+      }
+
+      if (result){
+
+        if (tTime.isAfter(fTime)){
+          result = true;
+        }else{
+          result = false;
+          showAlertDialog(context,  AppStrings.VALIDATION_FAILED, AppStrings.TO_TIME_ERROR, false, (){});
+        }
+      }
+
+    }
+    return result;
   }
 
   List<Map<String, dynamic>> getParamDict(List<ChildPetViewModel> list,bool isPet){

@@ -126,14 +126,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             final response = onValue;
             if (response['responseCode'] == "01") {
               showAlertDialog(
-                  context, 'Error', response['responseMessage'], false, null);
+                  context, 'Success', "An Email has been sent to your registered email account", false, null);
             } else {
               showAlertDialog(
                   context, 'Error', response['responseMessage'], false, null);
             }
           }else {
             showAlertDialog(
-                context, 'Error','An Error has occured', false, null);
+                context, 'Success','An Error has occured.', false, null);
           }
         });
       } else {

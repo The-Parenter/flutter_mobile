@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:parenter/Models/User/RefrenceModel.dart';
 import 'package:parenter/Widgets/textFeild.dart';
 import 'package:parenter/common/Constants.dart';
@@ -67,6 +68,9 @@ class ReferenceWidget extends StatelessWidget {
           Container(
             width:  double.infinity,
             child: TextField(
+                inputFormatters:  [
+                  MaskedInputFormater('(###) ###-####')
+                ],
               onChanged: (value){
                 referenceModel.contact = value;
               },

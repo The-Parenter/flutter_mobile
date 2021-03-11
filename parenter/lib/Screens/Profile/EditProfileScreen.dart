@@ -235,7 +235,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         controller: childAge,
                         style:TextStyle(fontSize: 12) ,
                         onChanged: (value){
-                          childs[index].name = value;
+                          childs[index].age = value;
                         },
                         cursorColor: AppColors.appPinkColor,
                         decoration: InputDecoration(

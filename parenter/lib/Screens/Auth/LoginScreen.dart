@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parenter/API/HTTPManager.dart';
@@ -33,10 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
   ProgressDialog progressDialog;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState();
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
@@ -163,7 +166,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      _handleGoogleSignIn();
+                      signInWithGoogle();
+                      //_handleGoogleSignIn();
                     },
                     child: Container(
                       height: 50,
@@ -326,13 +330,84 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     });
   }
-  Future<void> _handleGoogleSignIn() async {
-    try {
-      var res = await _googleSignIn.signIn();
-      print(res.displayName);
-    } catch (error) {
-      print(error);
-    }
+
+  void _sendSocialLoginRequest(BuildContext context,User gUser) {
+    check().then((internet) {
+      if (internet != null && internet) {
+        progressDialog.show();
+        HTTPManager().socialAuthenticateUser(gUser.email).then((onValue) {
+          progressDialog.hide();
+          final response = onValue;
+          if (response['responseCode'] == "01") {
+            if (Global.userType == UserType.Parent) {
+              var user = UserViewModel.api(response['data']);
+              Global.currentUser = user;
+              Global.token = user.token;
+              Global.userId = user.id;
+            }else{
+              var user = ServiceProviderRegisterModel.api(response['data']);
+              Global.currentServiceProvider = user;
+              Global.token = user.token;
+              Global.userId = user.id;
+            }
+            var manager = SharedPreferenceManager();
+            manager.saveUserToken();
+            manager.setUserId(Global.userId);
+            manager.saveUserType(Global.userType == UserType.Parent);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                BottomTabsScreen.routeName, (route) => false);
+          } else {
+            showAlertDialog(context, 'Thank You', "Please Complete your profile in the next steps", false, (){
+            });
+            if (Global.userType == UserType.Parent) {
+              var user = UserViewModel();
+              user.email = gUser.email;
+              user.firstName = gUser.displayName.split(" ").first;
+              user.lastName = gUser.displayName.split(" ").last;
+              Navigator.of(context)
+                  .pushNamed(ParentSignUpScreen.routeName,arguments: user);
+            }else{
+              Navigator.of(context)
+                  .pushNamed(ServiceProviderSignupScreen.routeName);
+            }
+
+          }
+        });
+      } else {
+        showAlertDialog(context, 'No Internet',
+            'Make sure you are connected to internet.', true, () {
+              Navigator.of(context).pop();
+              _sendLoginRequest(context);
+            });
+      }
+    });
   }
 
+//  Future<void> _handleGoogleSignIn() async {
+//    try {
+//      var res = await _googleSignIn.signIn();
+//      print(res.displayName);
+//    } catch (error) {
+//      print(error);
+//    }
+//  }
+  Future signInWithGoogle() async {
+   // model.state =ViewState.Busy;
+    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =  await googleSignInAccount.authentication;
+    AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,  );
+
+    var authResult = await _auth.signInWithCredential(credential);
+    var _user = authResult.user;
+    this._sendSocialLoginRequest(context, _user);
+//    assert(!_user.isAnonymous);
+//    assert(await _user.getIdToken() != null);
+//    FirebaseUser currentUser = await this._auth.currentUser;
+//    assert(_user.uid == currentUser.uid);
+//   // model.state =ViewState.Idle;
+//    print("User Name: ${_user.displayName}");
+//    print("User Email ${_user.email}");
+    }
 }

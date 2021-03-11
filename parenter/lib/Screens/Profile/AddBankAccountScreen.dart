@@ -240,10 +240,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
       showAlertDialog(context,  AppStrings.VALIDATION_FAILED, AppStrings.FORM_FILL_MESSAGE, false, (){});
       return;
     }
-
-
     _sendAddCardRequest(context);
-
   }
 
   void _sendAddCardRequest(BuildContext context) {
@@ -258,7 +255,6 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
         parameters['AccountNumber'] = this.numberController.text;
         parameters['BranchNumber'] = this.codeController.text;
         parameters['InstitutionNumber'] = this.institutionController.text;
-
         HTTPManager().addPaymentInfo(parameters,ApplicationURLs.ADD_BANK_INFO_URL).then((onValue) {
           progressDialog.hide();
           final response = onValue;

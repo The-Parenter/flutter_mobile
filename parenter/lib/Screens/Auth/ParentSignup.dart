@@ -17,7 +17,8 @@ import 'package:flutter_google_places/flutter_google_places.dart';
  var kGoogleApiKey =  "AIzaSyBswzNSlJ1rqDncjYmvkOqQTho6NzivfTQ";
 class ParentSignUpScreen extends StatefulWidget {
   static String routeName = '/ParentSignUpScreen';
-
+  final UserViewModel user;
+  ParentSignUpScreen(this.user);
   @override
   _ParentSignUpScreenState createState() => _ParentSignUpScreenState();
 }
@@ -40,6 +41,12 @@ class _ParentSignUpScreenState extends State<ParentSignUpScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (widget.user != null) {
+      this.registerUser = widget.user;
+      fNameController.text = registerUser.firstName;
+      lNameController.text = registerUser.lastName;
+      emailController.text = registerUser.email;
+    }
   }
 
   @override
@@ -314,7 +321,7 @@ class _ParentSignUpScreenState extends State<ParentSignUpScreen> {
       var lat = detail.result.geometry.location.lat;
       var long = detail.result.geometry.location.lng;
 
-      var address  =detail.result.formattedAddress;
+      var address  = detail.result.formattedAddress;
       registerUser.address = address;
       registerUser.latitude = '$lat';
       registerUser.longitude = '$long';

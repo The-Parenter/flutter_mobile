@@ -4,9 +4,9 @@ import 'package:parenter/Models/User/ChildPetViewModel.dart';
 
 class UserViewModel {
   String id;
-  String firstName;
-  String lastName;
-  String email;
+  String firstName = "";
+  String lastName ="";
+  String email ="";
   String phoneNumber;
   String password;
   String childCount;

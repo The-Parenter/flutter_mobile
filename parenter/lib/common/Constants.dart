@@ -71,6 +71,11 @@ class AppStrings {
   static String RATING_ADD_MESSAGE = 'Rating Added Successfully';
   static String ACCOUNT_BEING_VERIFIED = 'Thank you for signing up with The Parenter. We will review your details and send a confirmation email once your profile has been approved.';
 
+  static String FROM_TIME_ERROR = 'Please add from time for booking at least 10 minutes after current time';
+  static String TO_TIME_ERROR = 'To time cannot be before from time';
+  static String TRACKING_MESSAGE = "Tracking is  available only before and after 15 minutes of booking time";
+
+
 
 
   static String pending = 'Pending';

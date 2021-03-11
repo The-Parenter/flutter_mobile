@@ -66,14 +66,12 @@ class HTTPManager {
     }
     //return json.decode(response.body);
   }
-
   Future<ConversationListViewModel> getConversations(String userId) async {
     final url = ApplicationURLs.GET_CONVERSATIONS_URL + Global.userId;
     final Response response = await _handler.get(url, true);
     ConversationListViewModel list = ConversationListViewModel.api(response.data['data']);
     return list;
   }
-
   Future<FavouritesListModel> getAllFavourites(String userId) async {
     final url = ApplicationURLs.GET_FAVOURITE_URL + Global.userId;
     final Response response = await _handler.get(url, true);
@@ -108,6 +106,16 @@ class HTTPManager {
     return list;
   }
 
+  Future setNotificationsSettings(String uri) async {
+    final url =  uri ;
+    final Response response = await _handler.get(url, true);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
+  }
+
   Future removeCardInfo(String digits) async {
     final url = ApplicationURLs.REMOVE_CARD_INFO_URL + digits;
     var head = Map<String, String>();
@@ -134,21 +142,18 @@ class HTTPManager {
     RatingListModel list = RatingListModel.api(response.data['data']);
     return list;
   }
-
   Future<NotificationListModel> getAllNotifications(String userId) async {
     final url = ApplicationURLs.GET_USER_NOTIFICATION + userId;
     final Response response = await _handler.get(url, true);
     NotificationListModel list = NotificationListModel.api(response.data['data']);
     return list;
   }
-
   Future<PaymentListModel> getAllPayments(String userId) async {
     final url = ApplicationURLs.GET_PAYMENTS_URL + userId;
     final Response response = await _handler.get(url, true);
     PaymentListModel list = PaymentListModel.api(response.data['data']);
     return list;
   }
-
   Future forgotPassword(String email) async {
     final url = ApplicationURLs.FORGOT_PASSWORD_URL +
         '?emailAddress=' +
@@ -171,6 +176,15 @@ class HTTPManager {
     final response = await http.post(url,
         body: utf8.encode(json.encode(parameters)), headers: head);
     return json.decode(response.body);
+  }
+  Future socialAuthenticateUser(String email) async {
+    final url = ApplicationURLs.SOCIAL_LOGIN_URL + email;
+    final Response response = await _handler.get(url, true);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return false;
+    }
   }
   Future addPaymentInfo(Map<String, dynamic> parameters,String url) async {
     var head = Map<String, String>();
@@ -245,6 +259,16 @@ class HTTPManager {
     return json.decode(response.body);
   }
 
+  Future updateSPUser(Map<String, dynamic> parameters) async {
+    final url = ApplicationURLs.UPDATE_SP_URL;
+    var head = Map<String, String>();
+    head['content-type'] = 'application/json';
+    head['Authorization'] = '${Global.token}';
+    final response = await http.post(url,
+        body: utf8.encode(json.encode(parameters)), headers: head);
+    return json.decode(response.body);
+  }
+
   Future addBooking(Map<String, dynamic> parameters) async {
     final url = ApplicationURLs.ADD_BOOKING_URL;
     var head = Map<String, String>();
@@ -264,6 +288,8 @@ class HTTPManager {
         body: utf8.encode(json.encode(parameters)), headers: head);
     return json.decode(response.body);
   }
+
+
 
   Future<UserViewModel> getUser() async {
     final url = ApplicationURLs.GET_USER_URL + Global.userId;

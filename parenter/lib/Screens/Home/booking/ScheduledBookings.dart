@@ -219,7 +219,7 @@ class _ScheduledBookingsState extends State<ScheduledBookings> {
                                             Navigator.of(context)
                                                 .pushNamed(TrackScreen.routeName,arguments:widget.bookings[index] );
                                           }else{
-                                            showAlertDialog(context, 'Success', "Tracking is  available only before and after 15 minutes of booking time", false, null);
+                                            showAlertDialog(context, '', AppStrings.TRACKING_MESSAGE, false, null);
                                           }
 
 

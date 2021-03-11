@@ -141,7 +141,7 @@ class _BankInfoScreenState extends State<BankInfoScreen> {
                                   onTap: (){
                                     Navigator.of(context).pushNamed(AddBankAccountScreen.routeName);
                                   },
-                                  child: AppButton(btnTitle: 'Add Another Bak Account',)
+                                  child: AppButton(btnTitle: 'Add Another Bank Account',)
                               ),
                             );
                           },

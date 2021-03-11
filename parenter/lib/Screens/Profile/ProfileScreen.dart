@@ -6,9 +6,11 @@ import 'package:parenter/Screens/Profile/BankInfoScreen.dart';
 import 'package:parenter/Screens/Profile/ChangePasswordScreen.dart';
 import 'package:parenter/Screens/Profile/CreditCards.dart';
 import 'package:parenter/Screens/Profile/EditProfileScreen.dart';
+import 'package:parenter/Screens/Profile/EditServiceProviderScreen.dart';
 import 'package:parenter/Screens/Profile/FamilyInfoScreen.dart';
 import 'package:parenter/Screens/Profile/Favorites.dart';
 import 'package:parenter/Screens/Profile/PaymentsScreen.dart';
+import 'package:parenter/Screens/Profile/SettingsScreen.dart';
 import 'package:parenter/common/Constants.dart';
 import 'package:parenter/common/Singelton.dart';
 
@@ -72,8 +74,14 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: (){
-                            Navigator.of(context)
-                                .pushNamed(EditProfileScreen.routeName);
+                            if (Global.userType == UserType.Parent) {
+                              Navigator.of(context)
+                                  .pushNamed(EditProfileScreen.routeName);
+                            }else{
+                              Navigator.of(context)
+                                  .pushNamed(EditServiceProviderScreen.routeName);
+                            }
+
                           },
                             child: Text(
                           'Edit Profile',
@@ -204,7 +212,7 @@ class ProfileScreen extends StatelessWidget {
                           InkWell(
                             onTap: (){
                               Navigator.of(context)
-                                  .pushNamed(ChangePasswordScreen.routeName);
+                                  .pushNamed(SettingsScreen.routeName);
                             },
 
                             child: _cardWithIconAndText(
@@ -217,11 +225,11 @@ class ProfileScreen extends StatelessWidget {
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8))),
                                   child: Icon(
-                                    Icons.lock_outline,
+                                    Icons.settings,
                                     color: Colors.white,
                                   ),
                                 ),
-                                "Change Password"),
+                                "Settings"),
                           ),
                           Padding(
                             padding:

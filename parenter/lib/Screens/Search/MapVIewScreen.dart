@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:parenter/common/Singelton.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+
+import 'SearchDetail.dart';
 class MapScreen extends StatefulWidget {
   static final String routeName = '/MapScreen';
   final int searchType;
@@ -26,6 +29,7 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
   Mode _mode = Mode.overlay;
   GoogleMapController mapController;
+  Completer<GoogleMapController> _mapController = Completer();
   TextEditingController addressController = TextEditingController();
   Set<Marker> _markers = {};
    LatLng _center = const LatLng(45.521563, -122.677433);
@@ -48,6 +52,10 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
 
     });
+  }
+
+  void _onCameraMove(CameraPosition position) {
+    _center = position.target;
   }
 
   @override
@@ -149,9 +157,11 @@ class _MapScreenState extends State<MapScreen> {
                   child: GoogleMap(
 
                     onMapCreated: _onMapCreated,
+                    onCameraMove: _onCameraMove,
+
                     initialCameraPosition: CameraPosition(
                       target: _center,
-                      zoom: 11.0,
+                      zoom: 6.0,
                     ),
                     markers: _markers,
                   ),
@@ -486,7 +496,16 @@ class _MapScreenState extends State<MapScreen> {
       var address  = detail.result.formattedAddress;
       addressController.text = address;
        var position = LatLng(lat,long);
-       _center = LatLng(lat, long);
+      _center = LatLng(lat, long);
+
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: _center,
+            zoom: 6.0,
+          ),
+        ),
+      );
       setState(() {
       });
       _sendFilterRequest(context,position);
@@ -495,9 +514,6 @@ class _MapScreenState extends State<MapScreen> {
       print(lat);
       print(long);
       print(address);
-
-
-
     }
   }
 
@@ -552,6 +568,9 @@ class _MapScreenState extends State<MapScreen> {
 //    });
   }
   void _onMarkerTapped(ServiceProviderRegisterModel provider) {
+    Global.bookingSP = provider;
+    Navigator.of(context).pushNamed(SearchDetail.routeName,
+        arguments: widget.searchType);
 //    final Marker tappedMarker = markers[markerId];
 //    if (tappedMarker != _center) {
 //      setState(() {
