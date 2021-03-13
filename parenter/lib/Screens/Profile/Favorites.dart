@@ -17,7 +17,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   bool isLoading = false;
   void getFavorites() {
     HTTPManager()
-        .getAllFavourites(Global.currentUser.id)
+        .getAllFavourites(Global.userId)
         .then((val) {
       this.favouritesList = val;
       setState(() {

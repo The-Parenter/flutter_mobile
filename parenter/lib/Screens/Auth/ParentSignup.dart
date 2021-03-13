@@ -35,6 +35,8 @@ class _ParentSignUpScreenState extends State<ParentSignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController apartmentController = TextEditingController();
+
   UserViewModel registerUser = UserViewModel();
 
   @override
@@ -164,6 +166,18 @@ class _ParentSignUpScreenState extends State<ParentSignUpScreen> {
                 SizedBox(
                   height: 16,
                 ),
+                appTextField(
+                    'Apartment/Unit (Optional)',
+                    Icon(
+                      Icons.apartment,
+                      size: 25,
+                      color: AppColors.appPinkColor,
+                    ),
+                    controller: apartmentController
+                ),
+                SizedBox(
+                  height: 16,
+                ),
                 InkWell(
                   onTap: () async{
 
@@ -282,6 +296,7 @@ class _ParentSignUpScreenState extends State<ParentSignUpScreen> {
     registerUser.phoneNumber = phoneController.text;
     registerUser.email = emailController.text;
     registerUser.password = passwordController.text;
+    registerUser.unitNo = apartmentController.text;
     registerUser.address = addressController.text;
 
     Navigator.of(context)

@@ -343,8 +343,8 @@ class _SearchDetailState extends State<SearchDetail> {
       if (internet != null && internet) {
         progressDialog.show();
         Map<String, dynamic> parameters = Map();
-        parameters['serviceProviderId'] = Global.userId;
-        parameters['parentId'] = Global.bookingSP.id;
+        parameters['serviceProviderId'] = Global.bookingSP.id;
+        parameters['parentId'] = Global.userId;
         HTTPManager().addFavourite(parameters,isRemove).then((onValue) {
           progressDialog.hide();
           final response = onValue;

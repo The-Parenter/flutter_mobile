@@ -414,7 +414,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Book Summary',
+                      'Booking Summary',
                       style:
                           TextStyle(color: AppColors.textColor, fontSize: 22.0),
                     ),
@@ -453,13 +453,13 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                           Text(
                             'Booking Date',
                             style: TextStyle(
-                                color: AppColors.textColor, fontSize: 16),
+                                color: AppColors.textColor, fontSize: 14),
                           ),
                           Text(
                             '${getDateOnlyFromDate(this.selectedDate)}',
                             style: TextStyle(
                                 color: AppColors.colorSecondaryLightText,
-                                fontSize: 17),
+                                fontSize: 14),
                           ),
                         ],
                       ),
@@ -480,13 +480,13 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                           Text(
                             'Booking Time',
                             style: TextStyle(
-                                color: AppColors.textColor, fontSize: 16),
+                                color: AppColors.textColor, fontSize: 14),
                           ),
                           Text(
                             '${this.timingsFrom} - ${this.timingsTo}',
                             style: TextStyle(
                                 color: AppColors.colorSecondaryLightText,
-                                fontSize: 17),
+                                fontSize: 14),
                           ),
                         ],
                       ),
@@ -505,15 +505,15 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Service Provider Name',
+                            '${SUMMARY_NAMES[widget.searchType]}',
                             style: TextStyle(
-                                color: AppColors.textColor, fontSize: 16),
+                                color: AppColors.textColor, fontSize: 14),
                           ),
                           Text(
                             '${Global.bookingSP.getFullName()}',
                             style: TextStyle(
                                 color: AppColors.colorSecondaryLightText,
-                                fontSize: 17),
+                                fontSize: 14),
                           ),
                         ],
                       ),
@@ -537,13 +537,13 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                               Text(
                                 this.widget.searchType == 0 ?  'Extra Services':'Care Type',
                                 style: TextStyle(
-                                    color: AppColors.textColor, fontSize: 16),
+                                    color: AppColors.textColor, fontSize: 14),
                               ),
                               Text(
                                 this.widget.searchType == 0 ? _getExtraServices() : Global.bookingSP.petCareServiceType,
                                 style: TextStyle(
                                     color: AppColors.colorSecondaryLightText,
-                                    fontSize: 17),
+                                    fontSize: 14),
                               ),
                             ],
                           ),

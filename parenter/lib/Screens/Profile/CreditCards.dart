@@ -90,122 +90,124 @@ class _CreditCardsScreenState extends State<CreditCardsScreen> {
 
             this.isLoading
                 ? Expanded(child: ActivityIndicator())
-                :SingleChildScrollView(
+                :Expanded(
+                  child: SingleChildScrollView(
               child: Container(
-                height: MediaQuery.of(context).size.height - 130,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  height: MediaQuery.of(context).size.height - 130,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
 
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: ListView.builder(
-                          itemCount: this.creditCards.cards.length + 1,
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: ListView.builder(
+                            itemCount: this.creditCards.cards.length + 1,
 
-                          itemBuilder: (BuildContext context, index) {
-                            return index < creditCards.cards.length ?
-                            Dismissible(
-                              direction: DismissDirection.endToStart,
-                                confirmDismiss: (DismissDirection direction) async {
-                                  return await showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text("Confirm"),
-                                        content: const Text("Are you sure you wish to delete this item?"),
-                                        actions: <Widget>[
-                                          FlatButton(
-                                              onPressed: () => Navigator.of(context).pop(true),
-                                              child: const Text("Yes")
-                                          ),
-                                          FlatButton(
-                                            onPressed: () => Navigator.of(context).pop(false),
-                                            child: const Text("No"),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                              key: Key(creditCards.cards[index].id),
-                             // secondaryBackground: Icon(Icons.delete,color: Colors.red,),
-                              background: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                  children:[
-                                Icon(Icons.delete,color: Colors.red,),
+                            itemBuilder: (BuildContext context, index) {
+                              return index < creditCards.cards.length ?
+                              Dismissible(
+                                direction: DismissDirection.endToStart,
+                                  confirmDismiss: (DismissDirection direction) async {
+                                    return await showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text("Confirm"),
+                                          content: const Text("Are you sure you wish to delete this item?"),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                                onPressed: () => Navigator.of(context).pop(true),
+                                                child: const Text("Yes")
+                                            ),
+                                            FlatButton(
+                                              onPressed: () => Navigator.of(context).pop(false),
+                                              child: const Text("No"),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                key: Key(creditCards.cards[index].id),
+                               // secondaryBackground: Icon(Icons.delete,color: Colors.red,),
+                                background: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                    children:[
+                                  Icon(Icons.delete,color: Colors.red,),
 
-                              ]
-                              ),
-                              child: InkWell(
-                                onTap: (){
-                               //   Navigator.of(context).pushNamed(SearchDetail.routeName);
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 10.0),
-                                  child: Card(
-                                    elevation: 0.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 12.0,
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children:[
-                                                        Row(
-                                                          children: [
-                                                            Icon(Icons.credit_card,color: AppColors.appPinkColor,size: 30,),
-                                                            SizedBox(width: 16,),
-                                                            Text('**** **** ${creditCards.cards[index].last4Digits}')
-                                                          ],
-                                                        ),
-                                                        Icon(
-                                                          creditCards.cards[index].isActive ? Icons.check_circle_outline :Icons.radio_button_unchecked ,
-                                                          color: Colors.green,size: 25,)
-                                                      ]
-                                                  ),
-                                                ],
-                                              ),
-                                          ),
-                                        ],
+                                ]
+                                ),
+                                child: InkWell(
+                                  onTap: (){
+                                 //   Navigator.of(context).pushNamed(SearchDetail.routeName);
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 10.0),
+                                    child: Card(
+                                      elevation: 0.0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 12.0,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children:[
+                                                          Row(
+                                                            children: [
+                                                              Icon(Icons.credit_card,color: AppColors.appPinkColor,size: 30,),
+                                                              SizedBox(width: 16,),
+                                                              Text('**** **** ${creditCards.cards[index].last4Digits}')
+                                                            ],
+                                                          ),
+                                                          Icon(
+                                                            creditCards.cards[index].isActive ? Icons.check_circle_outline :Icons.radio_button_unchecked ,
+                                                            color: Colors.green,size: 25,)
+                                                        ]
+                                                    ),
+                                                  ],
+                                                ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              onDismissed: (direction){
-                                _deleteCard(creditCards.cards[index].last4Digits);
-                              },
-
-                            ):Padding(
-                              padding: const EdgeInsets.only(top:16.0),
-                              child: InkWell(
-                                onTap: (){
-                                  Navigator.of(context).pushNamed(AddCreditCardScreen.routeName);
+                                onDismissed: (direction){
+                                  _deleteCard(creditCards.cards[index].last4Digits);
                                 },
-                                  child: AppButton(btnTitle: 'Add Another Card',)
-                              ),
-                            );
-                          },
+
+                              ):Padding(
+                                padding: const EdgeInsets.only(top:16.0),
+                                child: InkWell(
+                                  onTap: (){
+                                    Navigator.of(context).pushNamed(AddCreditCardScreen.routeName);
+                                  },
+                                    child: AppButton(btnTitle: 'Add Another Card',)
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
 
-                  ],
-                ),
+                    ],
+                  ),
               ),
             ),
+                ),
           ],
         ),
       ),

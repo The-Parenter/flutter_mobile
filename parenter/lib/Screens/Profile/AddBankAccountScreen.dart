@@ -248,8 +248,6 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
       if (internet != null && internet) {
         progressDialog.show();
         Map<String, dynamic> parameters = Map();
-
-
         parameters['ServiceProviderId'] = Global.currentServiceProvider.id;
         parameters['AccountHolderName'] = this.titleController.text;
         parameters['AccountNumber'] = this.numberController.text;
@@ -261,7 +259,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
           if (response['responseCode'] == "01") {
             // var user = UserViewModel.api(response['data']);
             //   Global.currentUser = user;
-            showAlertDialog(context, 'Success', response['responseMessage'],false, null,closeMainScreen: true);
+            showAlertDialog(context, 'Bank', "Bank information has been saved successfully.",false, null,closeMainScreen: true);
 
           } else {
             showAlertDialog(context, 'Error', response['responseMessage'], false, null);

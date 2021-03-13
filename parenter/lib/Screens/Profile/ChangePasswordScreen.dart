@@ -260,7 +260,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           progressDialog.hide();
           final response = onValue;
           if (response['responseCode'] == "01") {
-            showAlertDialog(context, 'Success', response['responseMessage'], false, null);
+            showAlertDialog(context, 'Password', AppStrings.PASSWORD_CHANGED_SUSSCESSFULLY, false, null);
           } else {
             showAlertDialog(context, 'Error', response['responseMessage'], false, null);
           }

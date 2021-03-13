@@ -87,7 +87,7 @@ class HTTPManager {
   }
 
   Future<ConversationListViewModel> getAllMessages(String userId) async {
-    final url = ApplicationURLs.GET_MESSAGES_URL + Global.userId + "&recevierId=" + userId;
+    final url = ApplicationURLs.GET_MESSAGES_URL + Global.userId + "&receiverId=" + userId;
     final Response response = await _handler.get(url, true);
     ConversationListViewModel list = ConversationListViewModel.api(response.data['data']);
     return list;
@@ -288,8 +288,6 @@ class HTTPManager {
         body: utf8.encode(json.encode(parameters)), headers: head);
     return json.decode(response.body);
   }
-
-
 
   Future<UserViewModel> getUser() async {
     final url = ApplicationURLs.GET_USER_URL + Global.userId;

@@ -271,7 +271,7 @@ class _AddCreditCardScreenState extends State<AddCreditCardScreen> {
           if (response['responseCode'] == "01") {
            // var user = UserViewModel.api(response['data']);
          //   Global.currentUser = user;
-            showAlertDialog(context, 'Success', response['responseMessage'],false, null,closeMainScreen: true);
+            showAlertDialog(context, 'Credit Card', "Credit Card information has been saved successfully.",false, null,closeMainScreen: true);
 
           } else {
             showAlertDialog(context, 'Error', response['responseMessage'], false, null);

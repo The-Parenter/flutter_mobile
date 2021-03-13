@@ -42,29 +42,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController numberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController apartmentController = TextEditingController();
 
-
-
-//  void getUserDetails() {
-//    HTTPManager()
-//        .getUser()
-//        .then((val) {
-//      this.data = val;
-//      print(val);
-//      setState(() {
-//        //this.isLoading = false;
-//        name.text = data.firstName + ' ' + data.lastName;
-//        email.text = data.email;
-//        number.text = data.phoneNumber;
-//        address.text = data.address;
-//        childs = data.childs;
-//        totalChildren = data.childs.length.roundToDouble();
-//        pets = data.pets;
-//        totalPets = data.pets.length.roundToDouble();
-//      });
-//
-//    });
-//  }
 
   @override
   void initState() {
@@ -96,6 +75,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     emailController.text = data.email;
     numberController.text = data.phoneNumber;
     addressController.text = data.address;
+    apartmentController.text = data.unitNo;
 
   }
 
@@ -845,6 +825,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               SizedBox(
                 height: 16,
               ),
+              appTextField(
+                  'Apartment/Unit (Optional)',
+                  Icon(
+                    Icons.apartment,
+                    size: 25,
+                    color: AppColors.appPinkColor,
+                  ),
+                  controller: apartmentController
+              ),
+
+              SizedBox(
+                height: 16,
+              ),
               InkWell(
                 onTap: () async{
 
@@ -1218,6 +1211,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     data.phoneNumber = numberController.text;
     data.email = emailController.text;
     data.address = addressController.text;
+    data.unitNo = apartmentController.text;
 
 
     for (var each in this.childs){
@@ -1281,13 +1275,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         parameters['FirstName'] = data.firstName;
         parameters['LastName'] = data.lastName;
         parameters['Email'] = data.email;
-        parameters['Password'] = "123456";
         parameters['Phone'] = data.phoneNumber;
         parameters['ChildCount'] = this.childs.length.toString();
         parameters['PostalAddress'] = data.address;
         parameters['PetsCount'] = this.pets.length.toString();
         parameters['Longitude'] = data.longitude;
         parameters['Latitude'] = data.latitude;
+        parameters['UnitNo'] = data.unitNo;
         parameters['ListChildren'] = getChildParamDict(this.childs,false);
         parameters['ListPets'] = getChildParamDict(this.pets,true);
         parameters['Status'] = "Active";

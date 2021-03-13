@@ -475,6 +475,8 @@ class _SearchScreenState extends State<SearchScreen> {
         parameters['Radius'] =  filters.radius;
         HTTPManager().getServiceProviderByFilter(parameters).then((onValue) {
           progressDialog.hide();
+          showAlertDialog(context, '', "No Service Provider Found using these filters", false, null);
+
           if (onValue == null){
             showAlertDialog(context, '', "No Service Provider Found using these filters", false, null);
 

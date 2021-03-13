@@ -948,6 +948,7 @@ class _FamilyInformationScreenState extends State<FamilyInformationScreen> {
         parameters['PetsCount'] = this.pets.length.toString();
         parameters['Longitude'] = this.widget.registerUser.longitude;
         parameters['Latitude'] = this.widget.registerUser.latitude;
+        parameters['UnitNo'] = this.widget.registerUser.unitNo;
         parameters['ListChildren'] = getParamDict(this.childs,false);
         parameters['ListPets'] = getParamDict(this.pets,true);
         HTTPManager().registerParentUser(parameters).then((onValue) {

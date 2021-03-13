@@ -20,6 +20,7 @@ class UserViewModel {
   String socialToken;
   String address;
   String token;
+  String unitNo;
   List<ChildPetViewModel> childs = [];
   List<ChildPetViewModel> pets = [];
   List<String> favourtiesIds = [];
@@ -42,6 +43,7 @@ UserViewModel() {
    isSocialLogin = false;
    socialToken = "";
    token;
+   this.unitNo = "";
    address = "";
    childs = [];
    pets = [];
@@ -66,6 +68,8 @@ UserViewModel() {
     this.latitude = json['latitude'] ?? '';
     this.isSocialLogin = json['isSocialLogin'] ?? false;
     this.socialToken = json['socialToken'] ?? '';
+    this.unitNo = json['unitNo'] ?? '';
+
     if (json['token'] != null) {
       this.token = json['token'] ?? '';
     }

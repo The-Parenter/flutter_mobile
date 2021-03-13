@@ -74,7 +74,7 @@ class AppStrings {
   static String FROM_TIME_ERROR = 'Please add from time for booking at least 10 minutes after current time';
   static String TO_TIME_ERROR = 'To time cannot be before from time';
   static String TRACKING_MESSAGE = "Tracking is  available only before and after 15 minutes of booking time";
-
+  static String PASSWORD_CHANGED_SUSSCESSFULLY = "Your password has been updated successfully.";
 
 
 
@@ -110,7 +110,7 @@ class AppColors {
 
 var SEARCH_TYPES = ["ChildCare","DayCare","PetCare","PetBoarding"];
 
-var SAMPLE_NAMES = ["Ms.Molly Garner","MotherHood Day Care","Adam Sandlers","Pup House"];
+var SUMMARY_NAMES = ["Child Care Provider","Day Care Service","Pet Care Provider","Pet Boarding"];
 
 var daysName = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 var sortOptions = ["High To Low","Low To High"];

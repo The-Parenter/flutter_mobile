@@ -20,8 +20,8 @@ class SharedPreferenceManager{
   }
   getNotificationSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    mobileNotification = prefs.getBool(mobileNotificationString) ?? false;
-    emailNotification = prefs.getBool(emailNotificationString) ?? false;
+    mobileNotification = prefs.getBool(mobileNotificationString) ?? true;
+    emailNotification = prefs.getBool(emailNotificationString) ?? true;
   }
 
   saveUserToken() async {

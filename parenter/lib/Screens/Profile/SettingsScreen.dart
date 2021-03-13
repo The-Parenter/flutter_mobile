@@ -16,9 +16,8 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool emailNotification = false;
-  bool mobileNotification = false;
-
+  bool emailNotification = true;
+  bool mobileNotification = true;
 
   @override
   void initState()  {
@@ -164,13 +163,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      "Email Notifications",showSwitch: true,switchValue: emailNotification,onChange: (value){
+                      "Email Notifications",showSwitch: true,switchValue: emailNotification,onChange: (value) {
                     setState(() {
                       emailNotification = value;
                     });
-                    var url = ApplicationURLs.NOTIFICATION_SETTING_URL + Global.userId + "status=" + "${mobileNotification}" + "notificationType=" + "push";
-                    HTTPManager().setNotificationsSettings(url);
-                  }),
+                    var url = ApplicationURLs.NOTIFICATION_SETTING_URL +
+                        Global.userId + "&status=" + "${emailNotification}" +
+                        "&notificationType=" + "email";
+                    HTTPManager().setNotificationsSettings(url).then((
+                        response)  async {
+                      if (response['responseCode'] == "01") {
+                        SharedPreferenceManager.emailNotification =
+                            this.emailNotification;
+                        SharedPreferenceManager.mobileNotification =
+                            this.mobileNotification;
+                        await SharedPreferenceManager().saveNotificationSettings();
+
+
+                      }
+                    });
+                  })
                 ),
 
                 InkWell(
@@ -197,7 +209,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     setState(() {
                       mobileNotification = value;
                     });
-                    var url = ApplicationURLs.NOTIFICATION_SETTING_URL + Global.userId + "status=" + "${emailNotification}" + "notificationType=" + "email";
+                    var url = ApplicationURLs.NOTIFICATION_SETTING_URL + Global.userId + "&status=" + "${mobileNotification}" + "&notificationType=" + "push";
                     HTTPManager().setNotificationsSettings(url).then((value) async{
                       if (value){
                         SharedPreferenceManager.emailNotification = this.emailNotification;
